@@ -25,7 +25,7 @@ export function PodCanvas({ pods }: { pods: PodProps[] }) {
         add pod
         <PlusIcon />
       </Button>
-      <div className="relative flex">
+      <div className="relative flex w-full h-96">
         {podsState.map((pod, index) => (
           <Pod key={index} {...pod} />
         ))}
