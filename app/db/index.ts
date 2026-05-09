@@ -1,14 +1,26 @@
-interface PodSchema {
-  id: string;
-  x: number;
-  y: number;
-  text: string;
-}
+import { z } from "zod";
+
+const basePodSchema = z.object({
+  x: z.number(),
+  y: z.number(),
+  text: z.string(),
+});
+
+const PodSchema = basePodSchema.extend({
+  id: z.string(),
+});
+
+type PodSchema = z.infer<typeof PodSchema>;
+
+const AddPodSchema = basePodSchema;
+
+type AddPodSchema = z.infer<typeof AddPodSchema>;
 
 const _db: PodSchema[] = [];
 
-const addPod = (pod: PodSchema) => {
-  _db.push(pod);
+const addPod = (pod: AddPodSchema) => {
+  const newPod = { ...pod, id: crypto.randomUUID() };
+  _db.push(newPod);
 };
 
 const getPods = () => {
@@ -27,7 +39,11 @@ const clearDb = () => {
 };
 
 export const db = {
-  addPod,
+  PodSchema,
+  addPod: {
+    schema: AddPodSchema,
+    fn: addPod,
+  },
   getPods,
   deletePod,
   clearDb,
