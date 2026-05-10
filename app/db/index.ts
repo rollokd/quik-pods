@@ -27,6 +27,14 @@ const getPods = () => {
   return _db;
 };
 
+const updatePod = (id: string, pod: AddPodSchema) => {
+  const index = _db.findIndex((p) => p.id === id);
+  if (index !== -1) {
+    _db[index] = { ...pod, id };
+  }
+  return _db[index];
+};
+
 const deletePod = (id: string) => {
   const index = _db.findIndex((pod) => pod.id === id);
   if (index !== -1) {
@@ -45,6 +53,7 @@ export const db = {
     fn: addPod,
   },
   getPods,
+  updatePod,
   deletePod,
   clearDb,
 };
