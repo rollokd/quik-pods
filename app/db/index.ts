@@ -21,6 +21,7 @@ const _db: PodSchema[] = [];
 const addPod = (pod: AddPodSchema) => {
   const newPod = { ...pod, id: crypto.randomUUID() };
   _db.push(newPod);
+  return newPod;
 };
 
 const getPods = () => {
