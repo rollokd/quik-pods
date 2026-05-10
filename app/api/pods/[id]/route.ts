@@ -10,7 +10,6 @@ export async function PUT(request: Request, { params }: RouteContext) {
   const { id } = await params;
   const body = await request.json();
 
-  console.log("PUT request", { id, body });
   const newPod = await db.updatePod(id, body);
 
   return new Response(
