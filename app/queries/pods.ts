@@ -37,9 +37,9 @@ export const createPodOptions = mutationOptions({
       body: JSON.stringify(pod),
     });
 
-    return response.json();
+    return response;
   },
-  onSuccess: (_data, _variables, _result, context) => {
+  onSettled: (_data, _error, _variables, _result, context) => {
     context.client.refetchQueries({ queryKey: podKey() });
   },
 });
@@ -58,7 +58,7 @@ export const updatePodOptions = (id: string) =>
 
       return response.json();
     },
-    onSuccess: (_data, _variables, _result, context) => {
+    onSettled: (_data, _error, _variables, _result, context) => {
       context.client.invalidateQueries({ queryKey: podKey() });
     },
   });

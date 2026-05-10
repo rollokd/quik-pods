@@ -1,5 +1,4 @@
 import { PodCanvas } from "@/components/custom/pod-canvas";
-import { PodProps } from "@/components/custom/pod";
 import { getQueryClient } from "./get-query-client";
 import { podOptions } from "./queries/pods";
 
@@ -10,8 +9,8 @@ export default function Home() {
 
   return (
     <div className="flex flex-col flex-1 items-center justify-centerfont-sans">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 sm:items-start">
-        <h1>Quik Pods</h1>
+      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-12 px-16 sm:items-start">
+        <h1 className="text-xl font-bold">Quik Pods</h1>
         <PodCanvas />
       </main>
     </div>

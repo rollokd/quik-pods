@@ -2,11 +2,12 @@
 
 import { Button } from "@/components/ui/button";
 import { Pod } from "@/components/custom/pod";
-import { PlusIcon } from "lucide-react";
+import { PlusIcon, XCircleIcon } from "lucide-react";
 import { createPodOptions, podOptions } from "@/app/queries/pods";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { Spinner } from "../ui/spinner";
 import { getQueryClient } from "@/app/get-query-client";
+import { Alert, AlertAction, AlertDescription, AlertTitle } from "../ui/alert";
 
 export function PodCanvas() {
   const queryClient = getQueryClient();
@@ -16,10 +17,16 @@ export function PodCanvas() {
     isError,
   } = useQuery(podOptions);
 
-  const { mutate, isPending: isCreatingPod } = useMutation(createPodOptions);
+  const {
+    mutate,
+    isPending: isCreatingPod,
+    isError: isCreatingPodError,
+    reset: resetCreatingPod,
+    error: creatingPodError,
+  } = useMutation(createPodOptions);
 
   return (
-    <div className="relative flex flex-1 w-full max-w-3xl flex-col items-center justify-start p-4 sm:items-start">
+    <div className="relative flex flex-1 gap-2 w-full max-w-3xl flex-col items-center justify-start p-4 sm:items-start">
       <Button
         className="w-full"
         onClick={() =>
@@ -41,12 +48,27 @@ export function PodCanvas() {
           </>
         )}
       </Button>
+      {isCreatingPodError && (
+        <Alert variant={"destructive"}>
+          <AlertTitle>Error creating pod.</AlertTitle>
+          <AlertDescription>{creatingPodError?.message}</AlertDescription>
+          <AlertAction>
+            <Button
+              onClick={resetCreatingPod}
+              variant={"outline"}
+              size={"icon"}
+            >
+              <XCircleIcon />
+            </Button>
+          </AlertAction>
+        </Alert>
+      )}
       {isError ? (
-        <div className="relative flex w-full h-96">
+        <div className="relative flex items-center justify-center w-full h-96">
           <p>Error loading pods</p>
         </div>
       ) : isPodsPending ? (
-        <div className="relative flex w-full h-96">
+        <div className="relative flex gap-2 items-center justify-center w-full h-96">
           <Spinner /> loading pods...
         </div>
       ) : (
