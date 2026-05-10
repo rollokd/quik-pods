@@ -13,4 +13,5 @@ test("Page", () => {
   expect(
     screen.getByRole("heading", { level: 1, name: "Quik Pods" }),
   ).toBeDefined();
+  expect(screen.getByText("add pod")).toBeDefined();
 });
