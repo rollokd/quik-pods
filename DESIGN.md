@@ -23,3 +23,11 @@ I then wired up the front end to pull the list of pods from the API and display 
 Next I setup the text inputs to handle the mutation to update the pod text content. This was done using a debounced hook that I installed from [usehooks-ts](https://usehooks-ts.com/), I downloaded it to avoid recreating my own debounce utility and save time. This is just a utility hook that debounces the value of a text input, so that the API is not called on every keystroke. It only called the update API endpoint when the user stops typing after 500 milliseconds, as described in the requirements.
 
 I setup testing using Vitest, and wrote an initial basic test to verify the framework was working as expected. As I had already spent a fair bit of time on the project, I wrote out a plan of the tests and edge cases I wanted to cover and asked AI to write the tests. I started with some UI tests to validate the basic functionality of the application with mocked API calls. Also generated some unit tests for the API client and in-memory database.
+
+## Improvements / trade-offs
+
+The design of the widget was extremely primitive. With more time I was planning to have the widgets be draggable and move able and have the size and coordinates be stored in the database as my original design was more canvas-like.
+
+With more time I also would have implemented the delete functionality. I had the endpoint ready and it would take five minutes to add the mutation and a button to trigger it from the front end.
+
+In terms of trade offs, I know I could have taken a more Next.js native approach with server actions and blurred the lines between the front end and back end code, rather than going for the very separated client/server distinction using Tanstack query to handle the data transfer but this was more familiar to me.
